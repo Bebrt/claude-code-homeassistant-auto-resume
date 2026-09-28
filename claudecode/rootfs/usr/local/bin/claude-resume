@@ -1,0 +1,3 @@
+#!/bin/bash -l
+# Resume the last Claude Code conversation; start a new one if there is none.
+claude --continue || exec claude

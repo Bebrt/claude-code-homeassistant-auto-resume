@@ -116,6 +116,8 @@ RUN mkdir -p \
 # COPY works on every builder and needs no syntax image.
 COPY rootfs/root/.tmux.conf /root/.tmux.conf
 COPY rootfs/root/.bashrc /root/.bashrc
+COPY rootfs/usr/local/bin/claude-resume /usr/local/bin/claude-resume
+RUN chmod +x /usr/local/bin/claude-resume
 
 # Ensure .bashrc is sourced for login shells too
 RUN echo 'source ~/.bashrc' > /root/.profile
@@ -288,7 +290,7 @@ CMD ["/bin/bash", "-c", "\
     COLORS='background=#eff1f5,foreground=#4c4f69,cursor=#dc8a78'; \
   fi && \
   if [ \"$SESSION_PERSIST\" = \"true\" ]; then \
-    SHELL_CMD='tmux new-session -A -s claude /bin/sh -lc "exec claude --continue"'; \
+    SHELL_CMD='tmux new-session -A -s claude claude-resume'; \
   else \
     SHELL_CMD='bash --login'; \
   fi && \
